@@ -1,0 +1,21 @@
+Creaste a network
+    docker network create mynet
+
+Create a voldume
+    docker volume create myvolume
+    docker inspect myvolume
+
+Deploy the database stackupiss/northwind-db:v1
+    docker run -d \
+        --network mynet \
+        --volume myvolume:/var/lib/mysql \
+        --name mydb \
+        stackupiss/northwind:v1 
+
+Deploy the application
+    docker run -d \
+        -p 80:3000 \
+        -e DB_HOST=mydb \
+        --network mynet \
+        --name myapp
+        <your image here>
